@@ -1,3 +1,4 @@
 diffusers
 output/*
 **/__pycache__/
+.vscode
