@@ -1,6 +1,5 @@
 diffusers
-output/*
 __pycache__/
 .vscode
-**/ffhq/
+ffhq/
 *.pyc
