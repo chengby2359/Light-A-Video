@@ -251,8 +251,8 @@ def main(args):
             save_frame = frames[0]
             save_frame_path = os.path.splitext(results_path)[0] + ".png"
             
-            # save_frame = Image.fromarray(np.uint8(save_frame))
-            # save_frame = save_frame.resize((512, 512))
+            save_frame = Image.fromarray(np.uint8(save_frame))
+            save_frame = save_frame.resize((512, 512))
             
             imageio.imwrite(save_frame_path, save_frame)
             print(f"Frame saved as PNG: {save_frame_path}")
