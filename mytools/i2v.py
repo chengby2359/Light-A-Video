@@ -1,7 +1,15 @@
 import cv2
 import numpy as np
+import os
 
-def create_video_from_image(image_path, output_video_path, resolution=(512, 512), frame_count=16, fps=8.00):
+def create_video_from_image(image_path, output_video_dir, resolution=(512, 512), frame_count=16, fps=8.00):
+    os.makedirs(output_video_dir, exist_ok=True)
+    base_filename = os.path.basename(image_path)
+    base_name = os.path.splitext(base_filename)[0]
+    output_filename = f"{base_name}.mp4"
+    
+    output_video_path = os.path.join(output_video_dir, output_filename)
+    
     duration = frame_count / fps
 
     # Create a VideoWriter object
@@ -30,7 +38,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Convert an image into a video.')
     parser.add_argument('image_path', help='Path to the input image file')
-    parser.add_argument('output_video_path', help='Path to save the output video file')
+    parser.add_argument('output_video_dir', help='Path to save the output video file')
     parser.add_argument('--resolution', nargs=2, type=int, default=[512, 512], 
                         help='Video resolution as width height (default: 512 512)')
     parser.add_argument('--frame_count', type=int, default=16, 
@@ -40,7 +48,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     resolution = (args.resolution[0], args.resolution[1])
-    create_video_from_image(args.image_path, args.output_video_path, 
+    create_video_from_image(args.image_path, args.output_video_dir, 
                            resolution=resolution, frame_count=args.frame_count, fps=args.fps)
 
     # Example usage:

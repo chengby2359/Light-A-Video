@@ -791,7 +791,7 @@ class CogVideoXVideoToVideoPipeline(DiffusionPipeline, CogVideoXLoraLoaderMixin)
                     alpha_prod_t = self.scheduler.alphas_cumprod[t]
                     beta_prod_t = 1 - alpha_prod_t
                     pred_x0_latent = (alpha_prod_t**0.5) * latents - (beta_prod_t**0.5) * noise_pred
-
+                    # import pdb;pdb.set_trace()
                     consist_target = self.decode_latents(pred_x0_latent)
                     
                     ## detail

@@ -4,8 +4,8 @@
 
 # SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
-python mytools/i2v.py /mnt/nas/datasets_tmp/ffhq/images1024x1024/04000/04033.png \
-                            /mnt/nas/share2/home/cby/Light-A-Video/input_wan/04033.mp4 \
+python mytools/i2v.py /inspire/hdd/ws-f4d69b29-e0a5-44e6-bd92-acf4de9990f0/public-project/zhoujianjun-240108120125/chengby/datasets/ffhq-dataset/images1024x1024/01000/01018.png \
+                            /inspire/hdd/ws-f4d69b29-e0a5-44e6-bd92-acf4de9990f0/public-project/zhoujianjun-240108120125/chengby/codes/Light-A-Video/input_wan/ffhq \
                             --resolution 512 512 \
-                            --frame_count 13 \
-                            --fps 8
+                            --frame_count 9 \
+                            --fps 14

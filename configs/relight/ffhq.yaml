@@ -1,8 +1,8 @@
 n_prompt: "bad quality, worse quality"
-relight_prompt: "a car driving on the street, neon light"
-video_path: "input_animatediff/car.mp4"
+relight_prompt: "a person, sunset light"
+video_path: "input_animatediff/ffhq/01059.mp4"
 bg_source: "RIGHT"  ## LEFT, RIGHT, BOTTOM, TOP
-save_path: "output"
+save_path: "output/ani"
 
 width: 512
 height: 512

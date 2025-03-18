@@ -4,8 +4,10 @@ import imageio
 import argparse
 import safetensors.torch as sf
 from omegaconf import OmegaConf
+import numpy as np
 import torch.nn.functional as F
 from torch.hub import download_url_to_file
+from PIL import Image
 
 from diffusers import CogVideoXDDIMScheduler
 from transformers import CLIPTextModel, CLIPTokenizer
@@ -192,28 +194,60 @@ def main(args):
     video_list, video_name = read_video(video_path, image_width, image_height)
 
     print("################## begin ##################")
-    with torch.no_grad():
-        num_inference_steps = int(round(num_step / strength))
+    # with torch.no_grad():
+    #     num_inference_steps = int(round(num_step / strength))
 
-        output = pipe(
-            ic_light_pipe=ic_light_pipe,
-            relight_prompt=relight_prompt,
-            bg_source=bg_source,
-            video=video_list,
-            prompt=vdm_prompt, 
-            strength=strength,
-            negative_prompt=negative_prompt,
-            guidance_scale=text_guide_scale, 
-            num_inference_steps=num_inference_steps,
-            height=image_height,
-            width=image_width,
-            generator=generator,
-        )
+    #     output = pipe(
+    #         ic_light_pipe=ic_light_pipe,
+    #         relight_prompt=relight_prompt,
+    #         bg_source=bg_source,
+    #         video=video_list,
+    #         prompt=vdm_prompt, 
+    #         strength=strength,
+    #         negative_prompt=negative_prompt,
+    #         guidance_scale=text_guide_scale, 
+    #         num_inference_steps=num_inference_steps,
+    #         height=image_height,
+    #         width=image_width,
+    #         generator=generator,
+    #     )
 
-        frames = output.frames[0]
-        results_path = f"{save_path}/relight_{video_name}"
-        imageio.mimwrite(results_path, frames, fps=14)
-        print(f"relight! \n prompt:{relight_prompt}, light:{bg_source.value}, save in {results_path}.")
+    #     frames = output.frames[0]
+    #     results_path = f"{save_path}/relight_{video_name}"
+    #     imageio.mimwrite(results_path, frames, fps=14)
+    #     print(f"relight! \n prompt:{relight_prompt}, light:{bg_source.value}, save in {results_path}.")
+    for direction in [BGSource.LEFT, BGSource.RIGHT, BGSource.BOTTOM, BGSource.TOP]:
+        with torch.no_grad():
+            num_inference_steps = int(round(num_step / strength))
+            
+            output = pipe(
+                ic_light_pipe=ic_light_pipe,
+                relight_prompt=relight_prompt,
+                bg_source=direction,
+                video=video_list,
+                prompt=vdm_prompt,
+                strength=strength,
+                negative_prompt=negative_prompt,
+                guidance_scale=text_guide_scale,
+                num_inference_steps=num_inference_steps,
+                height=image_height,
+                width=image_width,
+                generator=generator,
+            )
+
+            frames = output.frames[0]
+            results_path = f"{save_path}/relight_{direction.name}_{video_name}"
+            # imageio.mimwrite(results_path, frames, fps=8)
+            print(f"relight! prompt:{relight_prompt}, light:{bg_source.value}, save in {results_path}.")
+            
+            save_frame = frames[0]
+            save_frame_path = os.path.splitext(results_path)[0] + ".png"
+            
+            save_frame = Image.fromarray(np.uint8(save_frame))
+            save_frame = save_frame.resize((512, 512))
+            
+            imageio.imwrite(save_frame_path, save_frame)
+            print(f"Frame saved as PNG: {save_frame_path}")
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
