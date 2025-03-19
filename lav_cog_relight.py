@@ -194,6 +194,7 @@ def main(args):
     video_list, video_name = read_video(video_path, image_width, image_height)
 
     print("################## begin ##################")
+    os.mkdirs(save_path, exist_ok=True)
     # with torch.no_grad():
     #     num_inference_steps = int(round(num_step / strength))
 
