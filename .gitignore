@@ -3,3 +3,4 @@ __pycache__/
 .vscode
 ffhq/
 *.pyc
+input_cog/PPR10K

@@ -1,7 +1,7 @@
 n_prompt: "bad quality, worse quality"
-vdm_prompt: "a photo of two person near the lake"
-relight_prompt: "a photo of two person near the lake, sunset light"
-video_path: "input_cog/PPR10K/0_1_0.mp4"
+vdm_prompt: ""
+relight_prompt: "a photo, with a warm sunset light, with soft golden and orange hues illuminating the scene. Incorporate realistic gentle shadows and reflections typical of sunset, highlighting textures and creating a serene, captivating ambiance"
+video_path: "input_cog/PPR10K/221_8_0.mp4"
 bg_source: "TOP"  ## LEFT, RIGHT, BOTTOM, TOP
 save_path: "output/cog/ppr10k"
 
